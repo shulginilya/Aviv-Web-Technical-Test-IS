@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { ListingItem } from '../../types';
-import { formatDate } from '../../utils/commons';
+import { formatDate, formatPrice } from '../../utils/commons';
 import styles from './listing-card.module.scss';
 
 interface ListingCardType {
@@ -18,7 +18,8 @@ const ListingCard: React.FC<ListingCardType> = ({
 	return (
 		<div className={styles['listing-card__wrap']}>
 			<article className={styles['listing-card']}>
-				<span className={styles['listing-card__price']}>{`${item.latest_price_eur.toLocaleString('de-De')} €`}</span>
+				{/* @ts-ignore */}
+				<span className={styles['listing-card__price']}>{`${formatPrice(item.latest_price_eur)} €`}</span>
 				<ul className={styles['listing-card__properties']}>
 					<li className={styles['listing-card__properties-item']}>{buildingTypeString(item.building_type)}</li>
 					<li className={styles['listing-card__properties-item']}>
