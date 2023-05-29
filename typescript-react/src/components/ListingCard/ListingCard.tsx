@@ -1,38 +1,56 @@
+import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { ListingItem } from '../../types';
+import { formatDate } from '../../utils/commons';
 import styles from './listing-card.module.scss';
 
-const ListingCard = () => {
-  return (
-    <article className={styles['listing-card']}>
-      <span className={styles['listing-card__price']}>320 000 &euro;</span>
-      <ul className={styles['listing-card__properties']}>
-        <li className={styles['listing-card__properties-item']}>Studio</li>
-        <li className={styles['listing-card__properties-item']}>
-          74m<sup>2</sup>
-        </li>
-        <li className={styles['listing-card__properties-item']}>3 rooms</li>
-      </ul>
-      <section className={styles['listing-card__address']}>
-        <address>48, boulevard des capucins, 10294, Paris</address>
-      </section>
-      <section className={styles['listing-card__description']}>
-        <h3>Property description: </h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-          commodo, arcu eu varius dapibus, lacus velit posuere tellus, nec
-          convallis sem velit ut leo. Maecenas maximus volutpat felis.
-        </p>
-      </section>
-      <div className={styles['listing-card__footer']}>
-        <p className={styles['listing-card__reference']}>
-          Ref: 123456 <br />
-          Last update: 2021/12/31
-        </p>
-        <a href="/" className={styles['listing-card__link']}>
-          See history &rarr;
-        </a>
-      </div>
-    </article>
-  );
+interface ListingCardType {
+	item: ListingItem
+};
+
+const ListingCard: React.FC<ListingCardType> = ({
+	item
+}) => {
+	const buildingTypeString = (buildingType: string): string => {
+		const buildingTypeStringValue = buildingType.toLowerCase();
+		return `${buildingTypeStringValue.charAt(0).toUpperCase()}${buildingTypeStringValue.slice(1)}`;
+	};
+	return (
+		<div className={styles['listing-card__wrap']}>
+			<article className={styles['listing-card']}>
+				<span className={styles['listing-card__price']}>{`${item.latest_price_eur.toLocaleString('de-De')} €`}</span>
+				<ul className={styles['listing-card__properties']}>
+					<li className={styles['listing-card__properties-item']}>{buildingTypeString(item.building_type)}</li>
+					<li className={styles['listing-card__properties-item']}>
+						{item.surface_area_m2}m<sup>2</sup>
+					</li>
+					<li className={styles['listing-card__properties-item']}>{`${item.rooms_count} ${item.rooms_count === 1 ? 'room' : 'rooms'}`} </li>
+				</ul>
+				<section className={styles['listing-card__address']}>
+					<address>{`${item.postal_address.street_address}, ${item.postal_address.postal_code}, ${item.postal_address.city}`}</address>
+				</section>
+				{item.description &&
+					<Fragment>
+						<h3>Property description: </h3>
+						<p>{item.description}</p>
+					</Fragment>
+				}
+				<div className={styles['listing-card__footer']}>
+					<p className={styles['listing-card__reference']}>
+						{item.ref &&
+							<Fragment>
+								Ref: {item.ref} <br />
+							</Fragment>
+						}
+						Last update: {formatDate(item.updated_date)}
+					</p>
+					<Link to={`/${item.id}/prices`} className={styles['listing-card__link']}>
+						See history &rarr;
+					</Link>
+				</div>
+			</article>
+		</div>
+	);
 };
 
 export default ListingCard;
