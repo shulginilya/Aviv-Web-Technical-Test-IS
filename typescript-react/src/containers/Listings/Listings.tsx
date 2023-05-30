@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { makeRequest } from '../../utils/requestUtil';
-import { ListingItem } from '../../types';
+import { makeRequest } from '@/utils/requestUtil';
+import { ListingItem } from './types';
 import ListingCard from '@components/ListingCard';
 import ListingForm from '@components/ListingForm';
 

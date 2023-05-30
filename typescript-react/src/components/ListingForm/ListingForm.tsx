@@ -1,6 +1,6 @@
 import { useReducer  } from 'react';
-import { makeRequest } from '../../utils/requestUtil';
-import { ListingItem, ListingFormState } from '../../types';
+import { makeRequest } from '@/utils/requestUtil';
+import { ListingItem, ListingFormState } from '@/containers/Listings/types';
 import styles from './listing-form.module.scss';
 
 interface ListingFormType {

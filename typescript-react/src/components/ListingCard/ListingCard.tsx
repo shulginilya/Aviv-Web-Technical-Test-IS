@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { ListingItem } from '../../types';
-import { formatDate, formatPrice } from '../../utils/commons';
+import { ListingItem } from '@/containers/Listings/types';
+import { formatDate, formatPrice } from '@/utils/commons';
 import styles from './listing-card.module.scss';
 
 interface ListingCardType {

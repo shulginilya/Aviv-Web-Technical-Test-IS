@@ -1,22 +1,13 @@
 import { useState, useEffect } from 'react';
-import { makeRequest } from '../../utils/requestUtil';
-import { formatDate, formatPrice } from '../../utils/commons';
+import { makeRequest } from '@/utils/requestUtil';
+import { PriceHistoryCardType, HistoryItemsType } from './types';
+import { formatDate, formatPrice } from '@/utils/commons';
 
 import styles from './price-history-card.module.scss';
 
-interface PriceHistoryCard {
-	itemId: number;
-};
-
-interface HistoryItemsType {
-	created_date: string;
-	price_eur: number;
-};
-
-const PriceHistoryCard: React.FC<PriceHistoryCard> = ({
+const PriceHistoryCard: React.FC<PriceHistoryCardType> = ({
 	itemId
 }) => {
-
 	const [localHistoryItems, setLocalHistoryItems] = useState<HistoryItemsType[] | []>([]);
 
 	const getListingItemsFromServer = async () => {
